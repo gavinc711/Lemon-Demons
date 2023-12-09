@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
     public float turnSpeed = 20f;
+	public int score;
+	public TextMeshProUGUI scoreText;
 
     Animator m_Animator;
     Rigidbody m_Rigidbody;
@@ -17,9 +21,12 @@ public class PlayerMovement : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody>();
         m_AudioSource = GetComponent<AudioSource>();
+		
+		score = 0;
+		scoreText.text = "Score: " + score;
     }
 
-    void FixedUpdate ()
+    void FixedUpdate()
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -52,5 +59,11 @@ public class PlayerMovement : MonoBehaviour
     {
         m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
         m_Rigidbody.MoveRotation(m_Rotation);
+    }
+	
+	public void EarnScore(int scoreToAdd)
+    {
+        score = score + scoreToAdd;
+        scoreText.text = "Score: " + score;
     }
 }
